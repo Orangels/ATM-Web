@@ -110,7 +110,7 @@ class SiderNav extends React.Component {
 const styles = {
   logo: {
     height: '32px',
-    background: 'rgba(255, 255, 255, .2)',
+    // background: 'rgba(255, 255, 255, .2)',
     margin: '16px'
   }
 }

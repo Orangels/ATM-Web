@@ -54,7 +54,9 @@ const Mode_2_com = LoadableComponent(()=>import('../../routes/mode_2/mode_2'))
 class ContentMain extends React.Component {
   render () {
     return (
-      <div style={{padding: 16, position: 'relative'}}>
+      <div
+          style={{padding: 16, position: 'relative'}}
+      >
         <Switch>
           {/*<PrivateRoute exact path='/home' component={Home}/>*/}
           <PrivateRoute exact path='/mode_1' component={Mode_1_com}/>

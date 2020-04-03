@@ -6,7 +6,9 @@ import {Drawer, Col, Row, Tag, Button} from 'antd'
 import {_fetch, get_2_float} from '../../utils/utils'
 import "video.js/dist/video-js.css";
 import back from '../../assets/back/back_large.jpg'
+import bg from '../../assets/back/bg.jpg'
 import './model_1.css'
+import login_bg from "../../assets/bg/login_bg.jpg";
 
 const uri = 'http://localhost/test';
 const options = { transports: ['websocket'] };
@@ -215,82 +217,85 @@ class App extends React.Component{
     render() {
 
         return(
-            <div className="Mode_1">
-                <Button type="primary" onClick={this.showDrawer} style={{marginLeft:10}}>
-                    设备信息
-                </Button>
-                <Drawer
-                    title="设备硬件信息"
-                    placement="top"
-                    closable={false}
-                    onClose={this.onClose}
-                    visible={this.state.visible}
-                    height={200}
+            <div className="Mode_1" style={styles.wrap_div}>
+                {/*<Button type="primary" onClick={this.showDrawer} style={{marginLeft:10}}>*/}
+                {/*    设备信息*/}
+                {/*</Button>*/}
+                {/*<Drawer*/}
+                {/*    title="设备硬件信息"*/}
+                {/*    placement="top"*/}
+                {/*    closable={false}*/}
+                {/*    onClose={this.onClose}*/}
+                {/*    visible={this.state.visible}*/}
+                {/*    height={200}*/}
+                {/*>*/}
+                <Row gutter={16}
+                     type="flex" justify="space-between"
+                     style={{ padding:20}}
+                     // style={{display:"flex", flexDirection:"column"}}
                 >
-                    <div style={{display:"flex", flexDirection:"column"}}>
-                        <div style={{display:"flex", flexDirection:"row"}}>
-                            <div style={styles.device_div}>
-                                <span>
-                                    CPU利用率:
-                                </span>
-                                <Tag color={this.state.cpu_percent > 70 ? '#FA0F21' : '#08D1FA'} style={{marginLeft:10}}>
-                                    {`${this.state.cpu_percent}%`}
-                                </Tag>
-                            </div>
-                            <div style={styles.device_div}>
-                                <span>
-                                    CPU温度:
-                                </span>
-                                <Tag color={this.state.cpu_temp > 70 ? '#FA0F21' : '#08D1FA'} style={{marginLeft:10}}>
-                                    {`${this.state.cpu_temp}℃`}
-                                </Tag>
-                            </div>
-                            <div style={styles.device_div}>
-                                <span>
-                                    GPU利用率:
-                                </span>
-                                <Tag color={this.state.gpu_percent > 70 ? '#FA0F21' : '#08D1FA'} style={{marginLeft:10}}>
-                                    {`${this.state.gpu_percent}%`}
-                                </Tag>
-                            </div>
+                        <div style={styles.device_div}>
+                            <span style={styles.device_span}>
+                                CPU利用率:
+                            </span>
+                            <Tag color={this.state.cpu_percent > 70 ? '#FA0F21' : '#08D1FA'} style={styles.device_tag}>
+                                {`${this.state.cpu_percent}%`}
+                            </Tag>
                         </div>
-                        <div style={{display:"flex", flexDirection:"row", marginTop:20}}>
-                            <div style={styles.device_div}>
-                                <span>
-                                    总内存:
-                                </span>
-                                <Tag color={'#08D1FA'} style={{marginLeft:10}}>
-                                    {`${this.state.memory_total}`}
-                                </Tag>
-                            </div>
-                            <div style={styles.device_div}>
-                                <span>
-                                    已使用内存:
-                                </span>
-                                <Tag color={this.state.memory_percent > 70 ? '#FA0F21' : '#08D1FA'} style={{marginLeft:10}}>
-                                    {`${this.state.memory_used}`}
-                                </Tag>
-                            </div>
-                            <div style={styles.device_div}>
-                                <span>
-                                    总硬盘大小:
-                                </span>
-                                <Tag color={'#08D1FA'} style={{marginLeft:10}}>
-                                    {`${this.state.disk_total}`}
-                                </Tag>
-                            </div>
-                            <div style={styles.device_div}>
-                                <span>
-                                    已使用硬盘大小:
-                                </span>
-                                <Tag color={this.state.disk_percent > 70 ? '#FA0F21' : '#08D1FA'} style={{marginLeft:10}}>
-                                    {`${this.state.disk_used}`}
-                                </Tag>
-                            </div>
+                        <div style={styles.device_div}>
+                            <span style={styles.device_span}>
+                                CPU温度:
+                            </span>
+                            <Tag color={this.state.cpu_temp > 70 ? '#FA0F21' : '#08D1FA'} style={styles.device_tag}>
+                                {`${this.state.cpu_temp}℃`}
+                            </Tag>
                         </div>
-                    </div>
-                </Drawer>
-                <Row gutter={16} style={{backgroundColor:'#F0F2F5', padding:10}}>
+                        <div style={styles.device_div}>
+                            <span style={styles.device_span}>
+                                GPU利用率:
+                            </span>
+                            <Tag color={this.state.gpu_percent > 70 ? '#FA0F21' : '#08D1FA'} style={styles.device_tag}>
+                                {`${this.state.gpu_percent}%`}
+                            </Tag>
+                        </div>
+                        <div style={styles.device_div}>
+                            <span style={styles.device_span}>
+                                总内存:
+                            </span>
+                            <Tag color={'#08D1FA'} style={styles.device_tag}>
+                                {`${this.state.memory_total}`}
+                            </Tag>
+                        </div>
+                        <div style={styles.device_div}>
+                            <span style={styles.device_span}>
+                                已使用内存:
+                            </span>
+                            <Tag color={this.state.memory_percent > 70 ? '#FA0F21' : '#08D1FA'} style={styles.device_tag}>
+                                {`${this.state.memory_used}`}
+                            </Tag>
+                        </div>
+                        <div style={styles.device_div}>
+                            <span style={styles.device_span}>
+                                总硬盘大小:
+                            </span>
+                            <Tag color={'#08D1FA'} style={styles.device_tag}>
+                                {`${this.state.disk_total}`}
+                            </Tag>
+                        </div>
+                        <div style={styles.device_div}>
+                            <span style={styles.device_span}>
+                                已使用硬盘大小:
+                            </span>
+                            <Tag color={this.state.disk_percent > 70 ? '#FA0F21' : '#08D1FA'} style={styles.device_tag}>
+                                {`${this.state.disk_used}`}
+                            </Tag>
+                        </div>
+                </Row>
+                {/*</Drawer>*/}
+                <Row gutter={16}
+                     // style={{backgroundColor:'#F0F2F5', padding:10}}
+                     style={{ padding:10}}
+                >
                     <Col span={12} >
                         <Tag color={'#FA0F21'} style={{position: 'absolute', top:10, right:10, zIndex:99}}>
                             {'正视摄像头'}
@@ -316,7 +321,10 @@ class App extends React.Component{
                         </video>
                     </Col>
                 </Row>
-                <Row gutter={12} type="flex" justify="space-between" style={{backgroundColor:'#F0F2F5', padding:10}}>
+                <Row gutter={12} type="flex" justify="space-between"
+                     // style={{backgroundColor:'#F0F2F5', padding:10}}
+                     style={{ padding:10}}
+                >
                     <div span={img_col} style={{width:img_width, height:warning_img_height, position:'relative'}}>
                         <Tag color={'#FA0F21'} style={{position: 'absolute', top:10, left:20}}>
                             {'聚集检测'}
@@ -355,6 +363,11 @@ class App extends React.Component{
 }
 
 const styles = {
+    wrap_div:{
+        background:`url(${bg}) no-repeat `,
+        backgroundSize: '100% 100%',
+        transition:'all .5s'
+    },
     waring_img :{
         width:img_width,
         height:warning_img_height,
@@ -369,6 +382,12 @@ const styles = {
         display:"flex",
         flexDirection:"row",
         width: 180,
+    },
+    device_span:{
+        color:'#FFFFFF'
+    },
+    device_tag:{
+        marginLeft:10,
     }
 }
 
