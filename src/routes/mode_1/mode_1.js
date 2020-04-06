@@ -2,7 +2,7 @@ import React from 'react';
 import io from 'socket.io-client'
 import video from 'video.js';
 import videoSWF from 'videojs-swf/dist/video-js.swf';
-import {Drawer, Col, Row, Tag, Button} from 'antd'
+import {Drawer, Col, Row, Tag, Button, Popover} from 'antd'
 import {_fetch, get_2_float} from '../../utils/utils'
 import "video.js/dist/video-js.css";
 import back from '../../assets/back/back_large.jpg'
@@ -25,17 +25,17 @@ class App extends React.Component{
         super(props);
         // 初始状态
         this.state = {
-            src:back,
+            src:[],
             //聚集
-            gather:back,
+            gather:[],
             //
-            hand_det:back,
+            hand_det:[],
             //频繁回头
-            turn_round:back,
+            turn_round:[],
             //遮挡
-            shelter:back,
+            shelter:[],
             //频繁出入
-            come_out:back,
+            come_out:[],
             // drawer
             visible: false,
             cpu_percent:0,
@@ -51,43 +51,44 @@ class App extends React.Component{
 
         this._ws_new_state = this._ws_new_state.bind(this)
         this.get_device_info = this.get_device_info.bind(this)
+        this.waring_img_history = this.waring_img_history.bind(this)
         this.socket = 1
 
 
     }
 
     _ws_new_state(data){
-        let url = window.location.origin + '/'
-        // let url = 'http://192.168.88.25:5000/'
+        let url = window.location.origin
+        // let url = 'http://127.0.0.1:5000'
         let results = data.result
         for (let result of results){
             console.log('*******')
             console.log(`${url}${result.path}`)
-            console.log(result.mode)
+            // console.log(result.mode)
             switch (result.mode) {
                 case 0:
                     this.setState({
-                        gather:`${url}${result.path}`
+                        gather:this.state.gather.concat(`${url}${result.path}`)
                     })
                     break
                 case 1:
                     this.setState({
-                        hand_det:`${url}${result.path}`
+                        hand_det:this.state.hand_det.concat(`${url}${result.path}`)
                     })
                     break
                 case 2:
                     this.setState({
-                        turn_round:`${url}${result.path}`
+                        turn_round:this.state.turn_round.concat(`${url}${result.path}`)
                     })
                     break
                 case 3:
                     this.setState({
-                        shelter:`${url}${result.path}`
+                        shelter:this.state.shelter.concat(`${url}${result.path}`)
                     })
                     break
                 case 4:
                     this.setState({
-                        come_out:`${url}${result.path}`
+                        come_out:this.state.come_out.concat(`${url}${result.path}`)
                     })
                     break
                 default:
@@ -105,7 +106,7 @@ class App extends React.Component{
 
     get_device_info(){
         let url = window.location.origin + '/'
-        // let url = 'http://192.168.88.42:5000/'
+        // let url = 'http://127.0.0.1:5000/'
         url = `${url}device_info`
 
         _fetch(url,{}, (json)=>{
@@ -180,9 +181,8 @@ class App extends React.Component{
         this.player_2 = video('example_video_2',options_2);
 
 
-        // let url = window.location.origin;
         let url = window.location.origin + '/'
-        // let url = '192.168.88.25:5000/'
+        // let url = 'http://127.0.0.1:5000/'
         url = `${url}Camera_Web_ws`
 
         //本机测试 用固定 url
@@ -212,6 +212,18 @@ class App extends React.Component{
         this.setState({
             visible: false,
         });
+    }
+
+    waring_img_history = (imgs)=>{
+        //倒叙
+        imgs.reverse()
+        let Imgs_history = imgs.map((img, i)=>{
+            let left = i === 0 ? 0 : 15
+            return (
+                <img width={100} height={100} src={img} style={{marginLeft:left}}/>
+            )
+        })
+        return Imgs_history
     }
 
     render() {
@@ -329,31 +341,41 @@ class App extends React.Component{
                         <Tag color={'#FA0F21'} style={{position: 'absolute', top:10, left:20}}>
                             {'聚集检测'}
                         </Tag>
-                        <img width="100%" height={`${warning_img_height}`} src={this.state.gather}/>
+                        <Popover content={this.waring_img_history(this.state.gather)} title={"聚集历史告警"} trigger="hover">
+                            <img width="100%" height={`${warning_img_height}`} src={this.state.gather.length > 0 ? this.state.gather[this.state.gather.length-1] : back}/>
+                        </Popover>
                     </div>
                     <div span={img_col - 1} style={styles.waring_img}>
                         <Tag color={'#FA0F21'} style={styles.waring_tag}>
                             {'手部检测'}
                         </Tag>
-                        <img width="100%" height={`${warning_img_height}`} src={this.state.hand_det}/>
+                        <Popover content={this.waring_img_history(this.state.hand_det)} title={"手部历史告警"} trigger="hover">
+                            <img width="100%" height={`${warning_img_height}`} src={this.state.hand_det.length > 0 ? this.state.hand_det[this.state.hand_det.length-1]:back}/>
+                        </Popover>
                     </div>
                     <div span={img_col} style={styles.waring_img}>
                         <Tag color={'#FA0F21'} style={styles.waring_tag}>
                             {'频繁回头'}
                         </Tag>
-                        <img width="100%" height={`${warning_img_height}`} src={this.state.turn_round}/>
+                        <Popover content={this.waring_img_history(this.state.turn_round)} title={"频繁回头历史告警"} trigger="hover">
+                            <img width="100%" height={`${warning_img_height}`} src={this.state.turn_round.length > 0 ? this.state.turn_round[this.state.turn_round.length-1]:back}/>
+                        </Popover>
                     </div>
                     <div span={img_col} style={styles.waring_img}>
                         <Tag color={'#FA0F21'} style={styles.waring_tag}>
                             {'遮挡检测'}
                         </Tag>
-                        <img width="100%" height={`${warning_img_height}`} src={this.state.shelter}/>
+                        <Popover content={this.waring_img_history(this.state.shelter)} title={"遮挡历史告警"} trigger="hover">
+                            <img width="100%" height={`${warning_img_height}`} src={this.state.shelter.length > 0 ? this.state.shelter[this.state.shelter.length-1]:back}/>
+                        </Popover>
                     </div>
                     <div span={img_col} style={styles.waring_img}>
                         <Tag color={'#FA0F21'} style={styles.waring_tag}>
                             {'频繁出入'}
                         </Tag>
-                        <img width="100%" height={`${warning_img_height}`} src={this.state.come_out}/>
+                        <Popover content={this.waring_img_history(this.state.come_out)} title={"频繁出入历史告警"} trigger="hover">
+                            <img width="100%" height={`${warning_img_height}`} src={this.state.come_out.length > 0 ? this.state.come_out[this.state.come_out.length-1]:back}/>
+                        </Popover>
                     </div>
                 </Row>
             </div>
