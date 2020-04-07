@@ -15,9 +15,9 @@ const options = { transports: ['websocket'] };
 
 const content_1_height = 600 - 230
 // const warning_img_height = 230
-const warning_img_height = 180
+const warning_img_height = 150
 const img_col = 5
-const img_width = 230
+const img_width = 250
 
 class App extends React.Component{
     // 构造
@@ -60,6 +60,7 @@ class App extends React.Component{
     _ws_new_state(data){
         let url = window.location.origin
         // let url = 'http://127.0.0.1:5000'
+        // let url = 'http://192.168.88.42:5000'
         let results = data.result
         for (let result of results){
             console.log('*******')
@@ -183,6 +184,7 @@ class App extends React.Component{
 
         let url = window.location.origin + '/'
         // let url = 'http://127.0.0.1:5000/'
+        // let url = 'http://192.168.88.42:5000/'
         url = `${url}Camera_Web_ws`
 
         //本机测试 用固定 url
@@ -214,13 +216,14 @@ class App extends React.Component{
         });
     }
 
-    waring_img_history = (imgs)=>{
+    waring_img_history = (imgs_arr)=>{
         //倒叙
+        let [...imgs] = imgs_arr
         imgs.reverse()
         let Imgs_history = imgs.map((img, i)=>{
             let left = i === 0 ? 0 : 15
             return (
-                <img width={100} height={100} src={img} style={{marginLeft:left}}/>
+                <img width={150} height={90} src={img} style={{marginLeft:left}}/>
             )
         })
         return Imgs_history
@@ -337,7 +340,7 @@ class App extends React.Component{
                      // style={{backgroundColor:'#F0F2F5', padding:10}}
                      style={{ padding:10}}
                 >
-                    <div span={img_col} style={{width:img_width, height:warning_img_height, position:'relative'}}>
+                    <div span={img_col} style={styles.waring_img}>
                         <Tag color={'#FA0F21'} style={{position: 'absolute', top:10, left:20}}>
                             {'聚集检测'}
                         </Tag>
@@ -393,7 +396,8 @@ const styles = {
     waring_img :{
         width:img_width,
         height:warning_img_height,
-        position:'relative'
+        position:'relative',
+        marginTop:20
     },
     waring_tag:{
         position: 'absolute',
