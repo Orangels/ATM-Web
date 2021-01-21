@@ -16,9 +16,6 @@ const url = login_bg
 
 
 
-
-
-
 @withRouter @inject('appStore') @observer
 class Login extends React.Component {
   state = {

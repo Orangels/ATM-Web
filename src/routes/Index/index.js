@@ -51,7 +51,7 @@ class Index extends React.Component{
               <span
                   style={{left: "49%", top:0,  position: 'absolute', color:'white', zIndex:99, fontSize:24}}
               >
-                            ATM 告警
+                            实时监测
               </span>
             </Header>
             <Content>
@@ -62,7 +62,7 @@ class Index extends React.Component{
                 style={{
                   background:`url(${bg}) no-repeat `,
                   backgroundSize: '100% 100%',
-                  textAlign: 'center', padding: '5px 50px',
+                  textAlign: 'center', padding: '20px 50px',
                   color:'#FFFFFF'
                 }}
             >©2020 Created by Priv </Footer>
