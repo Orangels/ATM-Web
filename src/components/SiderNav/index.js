@@ -82,11 +82,11 @@ const menus = [
   //     {key:'/home/other/springText',title:'弹性文字',icon:''},
   //   ]
   // },
-  {
-    title: '配置',
-    icon: 'bulb',
-    key: '/home/config'
-  },
+  // {
+  //   title: '配置',
+  //   icon: 'bulb',
+  //   key: '/home/config'
+  // },
   // {
   //   title: '关于',
   //   icon: 'info-circle-o',

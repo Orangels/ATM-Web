@@ -48,10 +48,20 @@ class Index extends React.Component{
                 }}
             >
               <HeaderBar collapsed={this.state.collapsed} onToggle={this.toggle}/>
-              <span
-                  style={{left: "49%", top:0,  position: 'absolute', color:'white', zIndex:99, fontSize:24}}
-              >
-                            实时监测
+              {/*<span*/}
+              {/*    style={{left: "49%", top:0,  position: 'absolute', color:'white', zIndex:99, fontSize:24}}*/}
+              {/*>*/}
+              {/*              多姿态高速运动目标智能检测与跟踪嵌入式系统*/}
+              {/*</span>*/}
+                <span
+                    style={{left: "43%", top:0,  position: 'absolute', color:'white', zIndex:99, fontSize:18}}
+                >
+                            多姿态高速运动目标智能检测
+              </span>
+                <span
+                    style={{left: "46%", top:20 ,  position: 'absolute', color:'white', zIndex:99, fontSize:18}}
+                >
+                            与跟踪嵌入式系统
               </span>
             </Header>
             <Content>

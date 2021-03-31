@@ -1,3 +1,7 @@
 img {
     border-radius:5px
 }
+
+.vjs-big-play-button {
+    z-index: 99;
+}
